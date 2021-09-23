@@ -25,7 +25,7 @@ logging.basicConfig(
 logging.debug('Version TelegramBot -- {0}'.format(__version__))
 
 """Инициализация бота"""
-API_TOKEN = '2017322344:AAEog-U0Lm52vXSwKgk_9oGPR6gk-w1RIXA'
+API_TOKEN = 'BOT_TOKEN_FROM_TELEGRAM'
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
