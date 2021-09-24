@@ -1,3 +1,46 @@
+import sqlite3
+
+# Соездинения
+conn = sqlite3.connect('list.db')
+# Запросы-хранение
+cur = conn.cursor()
+
+cur.execute("""CREATE TABLE IF NOT EXISTS greetings(
+    id INT PRIMARY KEY,
+    main TEXT);
+""")
+conn.commit()
+
+greetings_list = [
+    ('001', 'Привет'), ('002', 'привет'), ('003', 'ПРИВЕТ'), ('004', 'пРИВЕТ'),
+    ('005', 'Привет!'), ('006', 'Привет?')
+]
+
+# Добавление данных в таблицу:
+cur.executemany("INSERT INTO greetings VALUES(?, ?);", greetings_list)
+
+cur.execute("SELECT main FROM greetings;")
+all_results = cur.fetchall()
+# print(all_results)
+
+
+word = 'ПРИВЕТ'
+
+
+# Проверка str с ячейками из базы данных
+def check_list(string, data_list):
+    for words in data_list:
+        x = str(words)
+        y = x.replace("('", '')
+        z = y.replace("',)", '')
+
+        if z == string:
+            print('True')
+
+
+check_list(word, all_results)
+
+
 advice_list = ['Самые вкусные котлеты получатся из фарша, который постоит 5-6 часов вместе с нарезанным луком, '
                'солью и специями в холодильнике. Мясо немного замаринуется, котлеты будут гораздо вкуснее!',
                'Горячее молоко с кардамоном — напиток, который быстро поможет снять воспаление, '
