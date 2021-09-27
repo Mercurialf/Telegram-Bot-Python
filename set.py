@@ -5,40 +5,34 @@ conn = sqlite3.connect('list.db')
 # Запросы-хранение
 cur = conn.cursor()
 
+# Таблица
 cur.execute("""CREATE TABLE IF NOT EXISTS greetings(
     id INT PRIMARY KEY,
     main TEXT);
 """)
 conn.commit()
 
+# Таблица
+cur.execute("""CREATE TABLE IF NOT EXISTS advice(
+    id INT PRIMARY KEY,
+    main TEXT);
+""")
+conn.commit()
+
 greetings_list = [
-    ('001', 'Привет'), ('002', 'привет'), ('003', 'ПРИВЕТ'), ('004', 'пРИВЕТ'),
+    ('001', 'Привет'), ('002', 'привет'),
+    ('003', 'ПРИВЕТ'), ('004', 'пРИВЕТ'),
     ('005', 'Привет!'), ('006', 'Привет?')
+]
+
+advice_list = [
+    ('1', 'Первый Текст'), ('2', 'Второй Текст'), ('3', 'Третий Текст'),
+    ('4', 'Четвертый Текст'), ('5', 'Пятый текст'), ('6', 'Шестой текст')
 ]
 
 # Добавление данных в таблицу:
 cur.executemany("INSERT INTO greetings VALUES(?, ?);", greetings_list)
-
-cur.execute("SELECT main FROM greetings;")
-all_results = cur.fetchall()
-# print(all_results)
-
-
-word = 'ПРИВЕТ'
-
-
-# Проверка str с ячейками из базы данных
-def check_list(string, data_list):
-    for words in data_list:
-        x = str(words)
-        y = x.replace("('", '')
-        z = y.replace("',)", '')
-
-        if z == string:
-            print('True')
-
-
-check_list(word, all_results)
+cur.executemany("INSERT INTO advice VALUES(?, ?);", advice_list)
 
 
 advice_list = ['Самые вкусные котлеты получатся из фарша, который постоит 5-6 часов вместе с нарезанным луком, '
@@ -74,4 +68,3 @@ weather_list = ['Погода Киев', 'Погода Харьков', 'Пог�
 
 currency_list_usd = ['USD', 'usd']
 currency_list_pln = ['PLN', 'pln']
-

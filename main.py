@@ -3,6 +3,7 @@
 import logging
 import random
 import set  # Импорт собственных списков.
+import sqlite3
 
 # Библиотека для запросов и работы с html.
 from bs4 import BeautifulSoup
@@ -25,7 +26,7 @@ logging.basicConfig(
 logging.debug('Version TelegramBot -- {0}'.format(__version__))
 
 """Инициализация бота"""
-API_TOKEN = 'BOT_TOKEN_FROM_TELEGRAM'
+API_TOKEN = '#'
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 logging.basicConfig(level=logging.INFO)
@@ -173,6 +174,21 @@ async def get_text_messages(message: types.Message):
         user_currency = message.text.split()
         await message.answer('USD - {0}'.format(calculation_currency(parse(), user_currency[0], 2)))
         logging.info('Using USD currency')
+
+"""SQLite3"""
+conn = sqlite3.connect('list.db')
+cur = conn.cursor()
+
+
+def check_list(string, data_list):
+    for words in data_list:
+        x = str(words)
+        y = x.replace("('", '')
+        z = y.replace("',)", '')
+
+        if z == string:
+            print('True')
+            return True
 
 
 # Функция постоянной проверки наличия сообщений.
