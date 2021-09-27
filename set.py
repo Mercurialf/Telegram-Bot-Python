@@ -1,6 +1,6 @@
 import sqlite3
 
-# Соездинения
+# Соединения
 conn = sqlite3.connect('list.db')
 # Запросы-хранение
 cur = conn.cursor()
